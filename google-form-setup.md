@@ -17,11 +17,14 @@ Keep it short; only the first two fields are required.
 
 ## Settings
 - **Responses → Link to Sheets** → creates the directory spreadsheet automatically.
-- Open that Sheet → **Share → Anyone with the link → Viewer**. Paste its link into `CONFIG.LINKS.sheet`.
+- Open that Sheet → **Share → Anyone with the link → Viewer**. Paste its link into `LINKS.sheet` (in `config.js`).
 - In the Sheet, add a **Filter view** (Data → Filter views) so people can filter by Country / Program / Dorm without editing.
 - Do **not** collect email addresses unless you truly need them (Settings → keep "Collect email" off).
-- Paste the Form's share link into `CONFIG.LINKS.form`.
+- Paste the Form's share link into `LINKS.form` (in `config.js`).
 
 ## Optional: a separate "Request a group" form
-One question — *"Which group should we create? (country / program / dorm)"* — and paste its link into `CONFIG.LINKS.request`.
+One question — *"Which group should we create? (country / program / dorm)"* — and paste its link into `LINKS.request` (in `config.js`).
 (Or just point `request` at a `wa.me/<your-number>` link.)
+
+See also `group-links-form-setup.md` — a second, separate form that lets students (and you) self-serve a
+group's WhatsApp invite link directly, instead of just requesting one.
