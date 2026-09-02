@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kassel Internationals — Connect & Arrive</title>
+<style>
+  :root{
+    --bg:#f4f7fa; --card:#ffffff; --ink:#16232e; --muted:#5f7383; --line:#e2e9ef;
+    --brand:#0b6e4f; --wa:#25d366; --wa-d:#1da851; --accent:#1786c9;
+    --chip:#eef4fb; --shadow:0 2px 10px rgba(20,40,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f171d; --card:#18232c; --ink:#e8eef3; --muted:#9fb1bf; --line:#26343f;
+           --chip:#1d2a34; --shadow:0 2px 12px rgba(0,0,0,.35); }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:20px 16px 44px}
+  header{text-align:center;margin-bottom:12px}
+  .logo{font-size:30px}
+  h1{font-size:22px;margin:6px 0 4px;color:var(--brand)}
+  .tag{color:var(--muted);font-size:14px;margin:0}
+  .tabs{display:flex;gap:8px;background:var(--card);border:1px solid var(--line);
+        border-radius:12px;padding:5px;margin:14px 0;box-shadow:var(--shadow)}
+  .tab{flex:1;text-align:center;padding:9px 8px;border-radius:9px;font-weight:700;font-size:14px;
+       cursor:pointer;color:var(--muted);border:none;background:transparent}
+  .tab.on{background:var(--brand);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+        padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+  .card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+  select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+         background:var(--bg);color:var(--ink);font-size:15px;appearance:none;
+         background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f7383' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+         background-repeat:no-repeat;background-position:right 12px center}
+  .results{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+  .grp{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;
+       padding:12px;background:var(--chip)}
+  .grp .ico{font-size:22px;flex:0 0 auto}
+  .grp .txt{flex:1;min-width:0}
+  .grp .k{font-size:12px;color:var(--muted)}
+  .grp .v{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:10px;
+       padding:10px 14px;font-size:14px;font-weight:700;text-decoration:none;cursor:pointer;
+       white-space:nowrap;flex:0 0 auto}
+  .btn.wa{background:var(--wa);color:#04310f} .btn.wa:hover{background:var(--wa-d)}
+  .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+  .btn.block{display:flex;width:100%;margin-top:4px}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:460px){.split{grid-template-columns:1fr}}
+  .note{font-size:12.5px;color:var(--muted);background:var(--chip);border:1px solid var(--line);
+        border-radius:10px;padding:10px 12px}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
+  .demo{background:#fff3cd;color:#7a5b00;border:1px solid #f0d98a;border-radius:10px;
+        padding:9px 12px;font-size:12.5px;text-align:center;margin-bottom:12px}
+  @media (prefers-color-scheme: dark){.demo{background:#33290a;color:#f0d98a;border-color:#5c4a12}
+    .btn.wa{color:#eafff0}}
+  /* travel */
+  .route{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700;font-size:15px;margin:2px 0 6px}
+  .pill{background:var(--brand);color:#fff;border-radius:20px;padding:4px 11px;font-size:13px}
+  .arrow{color:var(--muted)}
+  ol.steps{margin:6px 0 0;padding-inline-start:20px} ol.steps li{margin:5px 0}
+  .air{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);
+       border-radius:10px;padding:10px 12px;background:var(--chip);margin:7px 0}
+  .air .an{font-weight:700;font-size:14px} .air .ad{font-size:12px;color:var(--muted)}
+  .air .at{font-weight:700;font-size:13px;color:var(--brand);white-space:nowrap}
+  .hl{background:#eaf6ef;border:1px solid #b7e0cf;border-radius:10px;padding:10px 12px;font-size:13px}
+  @media (prefers-color-scheme: dark){.hl{background:#12312270;border-color:#245c40}}
+  ul.tips{margin:6px 0 0;padding-inline-start:20px} ul.tips li{margin:4px 0;font-size:13px}
+  .hidden{display:none}
+  input[type=search]{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+         background:var(--bg);color:var(--ink);font-size:15px}
+  .grp{flex-wrap:wrap}
+  .grp .txt{min-width:110px}
+  .grp-actions{display:flex;gap:8px;flex:1 0 auto;justify-content:flex-end}
+  .icon-btn{padding:10px 12px;font-size:15px;line-height:1}
+  .btn:focus-visible, select:focus-visible, input:focus-visible, .tab:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="demo" id="demoBanner">⚙️ DEMO — replace the sample links in <code>config.js</code> with your real WhatsApp invite + Google Form links, then publish.</div>
+
+  <header>
+    <div class="logo">🎓🤝</div>
+    <h1>Kassel Internationals</h1>
+    <p class="tag">Connect with your people & find your way to Kassel.</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="groups">🤝 Find groups</button>
+    <button class="tab" data-tab="travel">✈️ Get to Kassel</button>
+  </div>
+
+  <!-- ================= GROUPS TAB ================= -->
+  <section id="groups">
+    <div class="card">
+      <h2>🔎 Find your WhatsApp groups</h2>
+      <label for="groupSearch">Search</label>
+      <input type="search" id="groupSearch" placeholder="Type to filter the lists below…" autocomplete="off">
+      <label for="country">🌍 Country / Nationality</label>
+      <select id="country"><option value="">— Select —</option></select>
+      <label for="program">📚 Study program</label>
+      <select id="program"><option value="">— Select —</option></select>
+      <label for="dorm">🏠 Where you live (dorm / area)</label>
+      <select id="dorm"><option value="">— Select —</option></select>
+      <div class="results" id="results" aria-live="polite">
+        <div class="note">Pick any of the three above and your matching groups appear here. 👆</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🧑‍🤝‍🧑 Be findable by others</h2>
+      <p class="hint" style="margin-top:0">Add yourself to the student directory so people looking for your country / program / room / arrival date can find <b>you</b> too.</p>
+      <div class="split">
+        <a class="btn wa block" id="formBtn" href="#" target="_blank" rel="noopener">➕ Add me</a>
+        <a class="btn ghost block" id="sheetBtn" href="#" target="_blank" rel="noopener">📋 Browse everyone</a>
+      </div>
+    </div>
+
+    <div class="note">
+      🔒 <b>Privacy:</b> Student-made helper, not official. It only shows the info you choose to share, it's visible to other students, and you can ask to have your entry removed anytime. Groups are join-by-link — nobody adds you or takes your number.
+    </div>
+
+    <div class="card" style="text-align:center">
+      <h2 style="justify-content:center">❓ Don't see your group?</h2>
+      <p class="hint" style="margin-top:0">No group for your country, program, or dorm yet? Request one and we'll create it.</p>
+      <a class="btn ghost block" id="requestBtn" href="#" target="_blank" rel="noopener">✋ Request a new group</a>
+    </div>
+  </section>
+
+  <!-- ================= TRAVEL TAB ================= -->
+  <section id="travel" class="hidden">
+    <div class="card">
+      <h2>✈️ The easy route to Kassel</h2>
+      <div class="route">
+        <span class="pill">✈️ Frankfurt (FRA)</span><span class="arrow">→</span>
+        <span class="pill">🚄 ICE ~1h35</span><span class="arrow">→</span>
+        <span class="pill">🚉 Kassel-Wilhelmshöhe</span>
+      </div>
+      <p class="hint" style="margin-top:0">Frankfurt is the best gateway: most direct international flights, and a fast <b>direct ICE train from inside the airport</b> to Kassel.</p>
+      <ol class="steps" id="steps"></ol>
+    </div>
+
+    <div class="card">
+      <h2>🛬 Which airport to fly into</h2>
+      <div id="airports"></div>
+      <p class="hint">Kassel's own airport (Kassel-Calden, KSF) has almost no scheduled flights — don't rely on it.</p>
+    </div>
+
+    <div class="card">
+      <h2>🎫 Train tickets & tips</h2>
+      <ul class="tips" id="tips"></ul>
+    </div>
+
+    <div class="card">
+      <h2>🌍 Coming from your country?</h2>
+      <div class="hl" id="fromHome"></div>
+      <p class="hint">Same idea from anywhere: fly to Frankfurt (or a nearby hub) → ICE to Kassel-Wilhelmshöhe → tram 1/3 to your place.</p>
+    </div>
+
+    <div class="card">
+      <h2>🎒 Keep in your carry-on</h2>
+      <ul class="tips" id="bring"></ul>
+    </div>
+  </section>
+
+  <footer>Made by students, for students · Universität Kassel 🏫</footer>
+</div>
+
+<script src="config.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+
+/* tabs */
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");
+  $("groups").classList.toggle("hidden", t.dataset.tab!=="groups");
+  $("travel").classList.toggle("hidden", t.dataset.tab!=="travel");
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+/* ---------- groups: build dropdowns ---------- */
+const KIND = { country:{ico:"🌍",label:"country group"}, program:{ico:"📚",label:"program group"}, dorm:{ico:"🏠",label:"dorm / area group"} };
+const SHEET_LINKS = { country:{}, program:{}, dorm:{} };
+const ORIGINAL_OPTIONS = {};
+const STORAGE_KEY = "kasselHub.lastPicks";
+
+function fill(sel,obj){
+  const s=$(sel);
+  Object.keys(obj).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=k;s.appendChild(o);});
+  ORIGINAL_OPTIONS[sel] = [...s.options].filter(o=>o.value!=="").map(o=>({value:o.value,text:o.textContent}));
+}
+fill("country",GROUPS.country); fill("program",GROUPS.program); fill("dorm",GROUPS.dorm);
+
+/* ---------- remember last picks ---------- */
+function loadLastPicks(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveLastPicks(){
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      country:$("country").value, program:$("program").value, dorm:$("dorm").value
+    }));
+  } catch(e){ /* storage unavailable — ignore */ }
+}
+(function applyLastPicks(){
+  const picks = loadLastPicks();
+  ["country","program","dorm"].forEach(id=>{
+    if(picks[id] && ORIGINAL_OPTIONS[id].some(o=>o.value===picks[id])) $(id).value = picks[id];
+  });
+})();
+
+/* ---------- search box: filters all three dropdowns ---------- */
+function filterSelect(id, query){
+  const sel = $(id), current = sel.value;
+  sel.innerHTML = "";
+  sel.appendChild(new Option("— Select —",""));
+  ORIGINAL_OPTIONS[id].forEach(opt=>{
+    const matches = !query || opt.text.toLowerCase().includes(query);
+    if(matches || opt.value===current) sel.appendChild(new Option(opt.text, opt.value));
+  });
+  sel.value = current;
+}
+$("groupSearch").addEventListener("input", e=>{
+  const q = e.target.value.trim().toLowerCase();
+  ["country","program","dorm"].forEach(id=>filterSelect(id,q));
+});
+
+/* ---------- link helpers ---------- */
+function isValidWaLink(link){ return typeof link==="string" && /^https:\/\/chat\.whatsapp\.com\//i.test(link); }
+function getLink(kind,name){ return SHEET_LINKS[kind][name] || GROUPS[kind][name] || ""; }
+
+async function copyLink(link, btn){
+  let ok = true;
+  try { await navigator.clipboard.writeText(link); }
+  catch(e){
+    try {
+      const ta=document.createElement("textarea");
+      ta.value=link; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch(e2){ ok=false; }
+  }
+  if(!ok) return;
+  const original = btn.innerHTML;
+  btn.innerHTML = "✅"; btn.disabled = true;
+  setTimeout(()=>{ btn.innerHTML = original; btn.disabled = false; }, 1500);
+}
+
+/* ---------- groups: render ---------- */
+function card(kind,name){
+  const link = getLink(kind,name), meta = KIND[kind], valid = isValidWaLink(link);
+  const row = document.createElement("div"); row.className="grp";
+  row.innerHTML = `<span class="ico">${meta.ico}</span><div class="txt"><div class="k">${meta.label}</div><div class="v">${name}</div></div>`;
+  const actions = document.createElement("div"); actions.className="grp-actions";
+  if(valid){
+    const a=document.createElement("a");
+    a.className="btn wa"; a.href=link; a.target="_blank"; a.rel="noopener"; a.innerHTML="💬 Join";
+    actions.appendChild(a);
+    const copyBtn=document.createElement("button");
+    copyBtn.type="button"; copyBtn.className="btn ghost icon-btn"; copyBtn.innerHTML="📋";
+    copyBtn.setAttribute("aria-label", `Copy the ${name} WhatsApp link`);
+    copyBtn.addEventListener("click", ()=>copyLink(link, copyBtn));
+    actions.appendChild(copyBtn);
+  } else {
+    const req=document.createElement("a");
+    req.className="btn ghost"; req.href=LINKS.request; req.target="_blank"; req.rel="noopener"; req.innerHTML="✋ Request";
+    actions.appendChild(req);
+    const add=document.createElement("a");
+    add.className="btn ghost"; add.href=LINKS.addGroupForm; add.target="_blank"; add.rel="noopener"; add.innerHTML="➕ Add link";
+    add.title="Already made this group? Add its invite link.";
+    actions.appendChild(add);
+  }
+  row.appendChild(actions);
+  return row;
+}
+function render(){
+  const box=$("results"); box.innerHTML="";
+  const picks=[["country",$("country").value],["program",$("program").value],["dorm",$("dorm").value]].filter(p=>p[1]);
+  if(!picks.length){box.innerHTML='<div class="note">Pick any of the three above and your matching groups appear here. 👆</div>';return;}
+  picks.forEach(([k,n])=>box.appendChild(card(k,n)));
+}
+["country","program","dorm"].forEach(id=>$(id).addEventListener("change",()=>{ saveLastPicks(); render(); }));
+$("formBtn").href=LINKS.form; $("sheetBtn").href=LINKS.sheet; $("requestBtn").href=LINKS.request;
+if(LINKS.form.indexOf("PASTE")===-1){$("demoBanner").style.display="none";}
+render();
+
+/* ---------- live group links from the "Add a group link" Sheet ---------- */
+function extractSheetId(url){
+  const m = /\/d\/([a-zA-Z0-9-_]+)/.exec(url||"");
+  return m ? m[1] : null;
+}
+function parseGroupOption(raw){
+  const idx = raw.indexOf(" — ");
+  if(idx===-1) return null;
+  const kind = raw.slice(0,idx).trim().toLowerCase();
+  if(!GROUPS[kind]) return null;
+  return { kind, name: raw.slice(idx+3).trim() };
+}
+async function loadSheetLinks(){
+  const id = extractSheetId(LINKS.groupLinksSheet);
+  if(!id) return;
+  try {
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json`);
+    const text = await res.text();
+    const start = text.indexOf("{"), end = text.lastIndexOf("}");
+    if(start===-1||end===-1) return;
+    const data = JSON.parse(text.slice(start, end+1));
+    const cols = (data.table.cols||[]).map(c=>(c.label||"").toLowerCase());
+    const groupCol = cols.findIndex(c=>c.includes("which group"));
+    const linkCol  = cols.findIndex(c=>c.includes("link"));
+    if(groupCol===-1||linkCol===-1) return;
+    (data.table.rows||[]).forEach(r=>{
+      const g = r.c[groupCol] && r.c[groupCol].v;
+      const l = r.c[linkCol]  && r.c[linkCol].v;
+      if(!g || !l || !isValidWaLink(String(l))) return;
+      const parsed = parseGroupOption(String(g));
+      if(!parsed) return;
+      SHEET_LINKS[parsed.kind][parsed.name] = String(l).trim();
+    });
+    render();
+  } catch(e){ /* sheet not set up yet, offline, or blocked — config links still work */ }
+}
+loadSheetLinks();
+
+/* travel render */
+$("steps").innerHTML   = TRAVEL.steps.map(s=>`<li>${s}</li>`).join("");
+$("airports").innerHTML= TRAVEL.airports.map(a=>`<div class="air"><div><div class="an">${a.name}</div><div class="ad">${a.info}</div></div><div class="at">${a.time}</div></div>`).join("");
+$("tips").innerHTML    = TRAVEL.tips.map(s=>`<li>${s}</li>`).join("");
+$("fromHome").innerHTML= TRAVEL.fromHome;
+$("bring").innerHTML   = TRAVEL.bring.map(s=>`<li>${s}</li>`).join("");
+</script>
+</body>
+</html>
